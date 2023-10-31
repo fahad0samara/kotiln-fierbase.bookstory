@@ -25,6 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -150,7 +151,11 @@ fun CategorySelection(selectedCategory: MutableState<FoodType>) {
             Button(
                 onClick = { selectedCategory.value = category },
                 modifier = Modifier
-                    .padding(start = 5.dp, end = 10.dp)
+                    .padding(start = 5.dp, end = 10.dp),
+                colors = ButtonDefaults.buttonColors(
+
+                    containerColor = if (selectedCategory.value == category)  Color(0xFF006973) else Color(0xFF91F1FF),
+                ),
             ) {
                 Text(
                     text = category.name,
@@ -210,7 +215,7 @@ fun FoodItem(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 150.dp, max = 150.dp),
+                    .heightIn(min = 170.dp, max = 170.dp),
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))

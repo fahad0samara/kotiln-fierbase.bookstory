@@ -1,15 +1,24 @@
 package com.fahad.list_food.navigation
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItemDefaults.contentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 
@@ -30,16 +39,37 @@ fun AppNavigation() {
 
     Scaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                contentColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.background,
+
+
+
+
+
+
+
+
+
+            ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
+
 
                 val items = listOf("foodItems", "cart")
 
                 items.forEach { item ->
                     NavigationBarItem(
-                        icon = { Icon(Icons.Default.Home, contentDescription = null) },
+                        icon = {
+                            when (item) {
+                                "foodItems" -> Icon(Icons.Default.Home, contentDescription = "Home")
+                                "cart" -> Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
+                            }
+                        },
                         label = { Text(text = item) },
+
+
+
                         selected = currentRoute == item,
                         onClick = {
                             navController.navigate(item) {

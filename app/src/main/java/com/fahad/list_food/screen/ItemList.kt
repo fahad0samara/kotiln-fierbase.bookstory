@@ -1,9 +1,11 @@
 package com.fahad.list_food.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -33,13 +36,22 @@ fun ItemList(viewModel: FoodViewModel, navController: NavController) {
     Column {
         LazyColumn {
             items(availableItems) { item ->
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
                 ) {
-                    Text(text = item, fontSize = 20.sp)
+                    Text(text = item.name, fontSize = 20.sp)
                     Spacer(modifier = Modifier.weight(1f))
+                    Text(text = "$${item.price}", fontSize = 20.sp)
+                    Image(
+                        painter = painterResource(id = item.imageResId),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .padding(top = 8.dp)
+                    )
                     IconButton(
                         onClick = { viewModel.addToCart(item) }
                     ) {

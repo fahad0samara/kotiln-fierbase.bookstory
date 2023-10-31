@@ -18,4 +18,8 @@ class ItemRepository @Inject constructor(private val itemDao: ItemDao) {
     }
 
     suspend fun getItemById(itemId: Long) = itemDao.getItemById(itemId)
+
+    suspend fun getAllItemNames(): List<String> {
+        return itemDao.getAllItemNames()
+    }
 }

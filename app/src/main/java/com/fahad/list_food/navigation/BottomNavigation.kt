@@ -11,13 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.fahad.list_food.model.FoodViewModel
 import com.fahad.list_food.screen.CartScreen
+import com.fahad.list_food.screen.ItemDetailsScreen
 import com.fahad.list_food.screen.ItemList
 
 @Composable
@@ -64,10 +67,30 @@ fun AppNavigation() {
             composable("cart") {
                 CartScreen(viewModel)
             }
+            composable(
+                "itemDetails/{itemName}",
+                arguments = listOf(navArgument("itemName") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val itemName = backStackEntry.arguments?.getString("itemName")
+                val selectedItem = viewModel.availableItems.find { it.name == itemName }
+                selectedItem?.let { item ->
+                    ItemDetailsScreen(item, viewModel, navController)
+                } ?: run {
+                    Text(text = "Item not found")
+                }
+            }
         }
     }
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
 

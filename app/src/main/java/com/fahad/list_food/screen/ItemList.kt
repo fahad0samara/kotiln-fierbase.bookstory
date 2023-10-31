@@ -57,6 +57,18 @@ fun ItemList(viewModel: FoodViewModel, navController: NavController) {
                     ) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = null)
                     }
+
+                    Button(
+                        onClick = {
+                            // Navigate to a screen to show more details
+                            navController.navigate("itemDetails/${item.name}")
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                    ) {
+                        Text(text = "See More Details")
+                    }
                 }
             }
         }

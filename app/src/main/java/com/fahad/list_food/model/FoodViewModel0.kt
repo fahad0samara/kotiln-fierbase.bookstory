@@ -3,7 +3,7 @@ package com.fahad.list_food.model
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.fahad.list_food.R
-import com.fahad.list_food.data.local.FoodItem
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

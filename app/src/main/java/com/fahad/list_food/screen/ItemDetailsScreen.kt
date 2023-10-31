@@ -16,12 +16,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.fahad.list_food.data.local.FoodItem
+import com.fahad.list_food.data.local.BookItem
+
 import com.fahad.list_food.model.FoodViewModel
 
 @Composable
 fun ItemDetailsScreen(
-    item: FoodItem,
+    item: BookItem,
     viewModel: FoodViewModel,
     navController: NavHostController
 ) {
@@ -31,7 +32,7 @@ fun ItemDetailsScreen(
             .padding(16.dp)
     ) {
         // Display item name, description, and image
-        Text(text = item.name, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(text = item.author, fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Text(text = item.description, fontSize = 16.sp, color = Color.Gray)
 
         Image(

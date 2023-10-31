@@ -53,8 +53,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fahad.list_food.R
-import com.fahad.list_food.data.local.FoodItem
-import com.fahad.list_food.data.local.FoodType
+import com.fahad.list_food.data.local.BookItem
+import com.fahad.list_food.data.local.BookType
+
 import com.fahad.list_food.model.FoodViewModel
 
 //@Composable
@@ -125,7 +126,7 @@ fun ItemList(
     viewModel: FoodViewModel,
     navController: NavController
 ) {
-    val selectedCategory = remember { mutableStateOf(FoodType.MainCourse) }
+    val selectedCategory = remember { mutableStateOf(BookType.Fiction) }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -138,7 +139,7 @@ fun ItemList(
 }
 
 @Composable
-fun CategorySelection(selectedCategory: MutableState<FoodType>) {
+fun CategorySelection(selectedCategory: MutableState<BookType>) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -147,7 +148,7 @@ fun CategorySelection(selectedCategory: MutableState<FoodType>) {
         horizontalArrangement = Arrangement.spacedBy(2.dp),
 
     ) {
-        items(FoodType.entries) { category ->
+        items(BookType.entries) { category ->
             Button(
                 onClick = { selectedCategory.value = category },
                 modifier = Modifier
@@ -168,7 +169,7 @@ fun CategorySelection(selectedCategory: MutableState<FoodType>) {
 
 @Composable
 fun FoodList(
-    items: List<FoodItem>,
+    items: List<BookItem>,
     navController: NavController
 ) {
     LazyVerticalGrid(
@@ -180,7 +181,7 @@ fun FoodList(
     ) {
         items(items) { item ->
             FoodItem(item, onTap = {
-                navController.navigate("itemDetails/${item.name}")
+                navController.navigate("itemDetails/${item.author}")
             })
         }
     }
@@ -189,8 +190,8 @@ fun FoodList(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodItem(
-    food: FoodItem,
-    onTap: (FoodItem) -> Unit
+    food: BookItem,
+    onTap: (BookItem) -> Unit
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -220,7 +221,7 @@ fun FoodItem(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = food.name,
+                text = food.author,
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
                     .fillMaxWidth(),
@@ -229,7 +230,7 @@ fun FoodItem(
                 } else {
                     colorResource(id = R.color.black)
                 },
-                fontSize = if (food.name.length > 20) 14.sp else 17.sp,
+                fontSize = if (food.author.length > 20) 14.sp else 17.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

@@ -41,17 +41,7 @@ fun AppNavigation() {
         bottomBar = {
             NavigationBar(
                 contentColor = Color.White,
-                containerColor = MaterialTheme.colorScheme.background,
-
-
-
-
-
-
-
-
-
-            ) {
+                containerColor = MaterialTheme.colorScheme.background) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
 
@@ -102,7 +92,7 @@ fun AppNavigation() {
                 arguments = listOf(navArgument("itemName") { type = NavType.StringType })
             ) { backStackEntry ->
                 val itemName = backStackEntry.arguments?.getString("itemName")
-                val selectedItem = viewModel.availableItems.find { it.name == itemName }
+                val selectedItem = viewModel.groupedItems.values.flatten().find { it.author == itemName }
                 selectedItem?.let { item ->
                     ItemDetailsScreen(item, viewModel, navController)
                 } ?: run {

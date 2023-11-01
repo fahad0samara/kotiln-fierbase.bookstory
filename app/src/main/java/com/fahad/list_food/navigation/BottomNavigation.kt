@@ -31,6 +31,7 @@ import com.fahad.list_food.model.FoodViewModel
 import com.fahad.list_food.screen.CartScreen
 import com.fahad.list_food.screen.ItemDetailsScreen
 import com.fahad.list_food.screen.ItemList
+import com.fahad.list_food.screen.SearchScreen
 
 @Composable
 fun AppNavigation() {
@@ -41,7 +42,8 @@ fun AppNavigation() {
         bottomBar = {
             NavigationBar(
                 contentColor = Color.White,
-                containerColor = MaterialTheme.colorScheme.background) {
+                containerColor = MaterialTheme.colorScheme.background
+            ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
 
@@ -53,11 +55,13 @@ fun AppNavigation() {
                         icon = {
                             when (item) {
                                 "foodItems" -> Icon(Icons.Default.Home, contentDescription = "Home")
-                                "cart" -> Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
+                                "cart" -> Icon(
+                                    Icons.Default.ShoppingCart,
+                                    contentDescription = "Cart"
+                                )
                             }
                         },
                         label = { Text(text = item) },
-
 
 
                         selected = currentRoute == item,
@@ -87,12 +91,19 @@ fun AppNavigation() {
             composable("cart") {
                 CartScreen(viewModel)
             }
+            composable("SearchScreen") {
+                SearchScreen(
+                    viewModel,
+                    navController
+                )
+            }
             composable(
                 "itemDetails/{itemName}",
                 arguments = listOf(navArgument("itemName") { type = NavType.StringType })
             ) { backStackEntry ->
                 val itemName = backStackEntry.arguments?.getString("itemName")
-                val selectedItem = viewModel.groupedItems.values.flatten().find { it.author == itemName }
+                val selectedItem =
+                    viewModel.groupedItems.values.flatten().find { it.author == itemName }
                 selectedItem?.let { item ->
                     ItemDetailsScreen(item, viewModel, navController)
                 } ?: run {

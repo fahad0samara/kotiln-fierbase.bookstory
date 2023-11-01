@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">list-food</string>
+    <string name="search_books">
+        Search for books
+    </string>
+    <string name="no_results_found">No results found for your search
+        try to search again</string>
+
+
+
+
 </resources>

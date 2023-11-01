@@ -15,15 +15,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -31,21 +33,31 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -121,22 +133,71 @@ import com.fahad.list_food.model.FoodViewModel
 //
 //    }}
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemList(
     viewModel: FoodViewModel,
     navController: NavController
 ) {
     val selectedCategory = remember { mutableStateOf(BookType.Fiction) }
+    val itemsForCategory = viewModel.groupedItems[selectedCategory.value] ?: emptyList()
+
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
+        // Search bar with TextField
+
+        OutlinedTextField(
+            value = "",
+            onValueChange = { },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .height(50.dp)
+                .onFocusChanged {
+                    if (it.isFocused) {
+                        navController.navigate("searchScreen")
+                    }
+                },
+
+
+            trailingIcon = {
+                Icon(
+                    Icons.Default.Search,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(24.dp),
+
+                    contentDescription = null,
+                    tint = Color(0xFF91F1FF)
+                )
+            },
+            colors = TextFieldDefaults.colors(
+
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color(0xFF91F1FF),
+                disabledContainerColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                disabledTextColor = Color.Transparent,
+                disabledPlaceholderColor = Color.Transparent,
+                disabledLeadingIconColor = Color.Transparent,
+                disabledTrailingIconColor = Color.Transparent,
+
+
+                ),
+            shape = CutCornerShape(15.dp),
+
+
+            placeholder = { Text("Search for books") }
+        )
+
         CategorySelection(selectedCategory)
 
-        val itemsForCategory = viewModel.groupedItems[selectedCategory.value] ?: emptyList()
         FoodList(itemsForCategory, navController)
     }
 }
+
 
 @Composable
 fun CategorySelection(selectedCategory: MutableState<BookType>) {
@@ -147,7 +208,7 @@ fun CategorySelection(selectedCategory: MutableState<BookType>) {
             .height(50.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
 
-    ) {
+        ) {
         items(BookType.entries) { category ->
             Button(
                 onClick = { selectedCategory.value = category },
@@ -155,7 +216,9 @@ fun CategorySelection(selectedCategory: MutableState<BookType>) {
                     .padding(start = 5.dp, end = 10.dp),
                 colors = ButtonDefaults.buttonColors(
 
-                    containerColor = if (selectedCategory.value == category)  Color(0xFF006973) else Color(0xFF91F1FF),
+                    containerColor = if (selectedCategory.value == category) Color(0xFF006973) else Color(
+                        0xFF91F1FF
+                    ),
                 ),
             ) {
                 Text(
@@ -222,15 +285,18 @@ fun FoodItem(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = food.author,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
                     .fillMaxWidth(),
                 color = if (isSystemInDarkTheme()) {
-                    colorResource(id = R.color.white)
+                    Color(0xFF91F1FF)
+
                 } else {
-                    colorResource(id = R.color.black)
+                    Color(0xFF006973)
+
                 },
-                fontSize = if (food.author.length > 20) 14.sp else 17.sp,
+                fontSize = if (food.author > 20.toString()) 14.sp else 17.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -252,15 +318,40 @@ fun FoodItem(
                         colorResource(id = R.color.black)
                     }
                 )
-                Text(
-                    text = "${food.price} min",
-                    fontSize = 18.sp,
-                    color = if (isSystemInDarkTheme()) {
-                        colorResource(id = R.color.white)
-                    } else {
-                        colorResource(id = R.color.black)
-                    }
-                )
+                Row(
+                    modifier = Modifier,
+
+
+                    verticalAlignment = Alignment.CenterVertically,
+
+
+                    ) {
+                    Text(
+                        text = food.pages.toString(),
+                        fontSize = 18.sp,
+                        color = if (isSystemInDarkTheme()) {
+                            colorResource(id = R.color.white)
+                        } else {
+                            colorResource(id = R.color.black)
+                        }
+                    )
+                    Icon(
+                        imageVector = Icons.Default.List,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = 4.dp),
+                        tint = if (isSystemInDarkTheme()) {
+                            Color(0xFF91F1FF)
+
+                        } else {
+                            Color(0xFF006973)
+
+                        },
+                    )
+
+
+                }
+
             }
         }
     }

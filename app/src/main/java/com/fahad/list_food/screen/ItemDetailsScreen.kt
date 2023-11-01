@@ -126,7 +126,7 @@ fun ItemDetailsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(10.dp)
                     .clip(RoundedCornerShape(16.dp))
             )
 
@@ -134,15 +134,16 @@ fun ItemDetailsScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .padding(horizontal = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+
                 ) {
                     Button(
                         onClick = { viewModel.addToCart(item) },
                         modifier = Modifier
-                            .height(50.dp)
-                            .weight(1f) // Takes half the available width
-                            .padding(end = 8.dp)
+                            .height(40.dp).size(40.dp)
+                            .weight(1f),
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -151,52 +152,98 @@ fun ItemDetailsScreen(
                             Icon(
                                 Icons.Default.ShoppingCart,
                                 contentDescription = "Add to Cart",
-                                modifier = Modifier.size(32.dp)
+                                modifier = Modifier.size(40.dp)
                             )
                             Text(
                                 "Add to Cart",
                                 modifier = Modifier.padding(start = 4.dp)
                             )
                         }
-                    }
 
-                    Button(
-                        onClick = { /* Handle adding to favorite */ },
+
+                    }
+                    IconButton(
+                        onClick = { /* Add to favorites logic */ },
                         modifier = Modifier
-                            .height(50.dp)
-                            .weight(1f) // Takes half the available width
-                            .padding(start = 8.dp)
+
+                            .padding(16.dp)
+                            .background(Color.White, RoundedCornerShape(16.dp))
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Icon(
-                                Icons.Default.Favorite,
-                                contentDescription = "Add to Favorite",
-                                modifier = Modifier.size(32.dp)
-                            )
-                            Text(
-                                "Add to Favorite",
-                                modifier = Modifier.padding(start = 4.dp)
-                            )
-                        }
+                        Icon(
+                            Icons.Default.Favorite,
+                            contentDescription = "Favorite",
+                            modifier = Modifier.size(32.dp),
+                            tint = Color.Black
+                        )
                     }
                 }
 
 
-                Text(
-                    text = item.title,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+
+
+
+
+
 
                 Text(
-                    text = "Author: ${item.author}",
-                    fontSize = 16.sp,
-                    color = Color.Gray,
+                    text = item.title,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+
+                    modifier= Modifier.align(Alignment.CenterHorizontally)
+
                 )
+                Row (
+                    modifier = Modifier
+                        .fillMaxWidth().height(50.dp).
+                    padding(horizontal = 5.dp),
+
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+
+
+                ){
+                    Text(
+                        text = "Author: ${item.author}",
+                        fontSize = 16.sp,
+                        fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
+                        fontWeight = FontWeight.Bold
+
+
+                    )
+                    Text(
+                    text = "Year: ${item.publicationYear}",
+                        fontSize = 16.sp,
+                        fontFamily = MaterialTheme.typography.bodyLarge.fontFamily,
+                        fontWeight = FontWeight.Bold
+                )
+                }
+
+
+
+                Row (
+                    modifier = Modifier
+                        .fillMaxWidth().height(50.dp).background(MaterialTheme.colorScheme.primary,
+                            RoundedCornerShape(25.dp)).
+                    padding( 10.dp),
+
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+
+                ){
+                    Text(
+                        text = "Price: $${item.price}",
+                        fontSize = 18.sp
+                    )
+
+                    Text(
+                        text = "Pages: ${item.pages} pages",
+                        fontSize = 18.sp
+                    )
+
+
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -208,43 +255,16 @@ fun ItemDetailsScreen(
 
                 Text(
                     text = item.description,
-                    fontSize = 16.sp,
-                    color = Color.Black,
+                    fontSize = 16.sp, textAlign = TextAlign.Justify
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = "Price: $${item.price}",
-                    fontSize = 18.sp
-                )
 
-                Text(
-                    text = "Pages: ${item.pages} pages",
-                    fontSize = 18.sp
-                )
 
-                Text(
-                    text = "Publication Year: ${item.publicationYear}",
-                    fontSize = 18.sp
-                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Button(
-                    onClick = { },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .padding(bottom = 16.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                       containerColor = Color.Red,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(text = "Add to Cart")
-                }
             }
         }
     }

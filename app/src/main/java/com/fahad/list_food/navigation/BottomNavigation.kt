@@ -82,14 +82,14 @@ fun AppNavigation() {
         NavHost(
             navController = navController,
             startDestination = "foodItems",
-            modifier = androidx.compose.ui.Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding)
         ) {
             composable("foodItems") {
 
                 ItemList(viewModel, navController)
             }
             composable("cart") {
-                CartScreen(viewModel)
+                CartScreen(viewModel, )
             }
             composable("SearchScreen") {
                 SearchScreen(

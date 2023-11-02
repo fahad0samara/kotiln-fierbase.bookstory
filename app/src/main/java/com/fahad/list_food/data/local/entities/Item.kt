@@ -7,11 +7,13 @@ import androidx.room.PrimaryKey
 data class Item(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val name: String,
+    val title: String,
     val description: String,
     val imageResId: Int,
-    val price: Double
+    val price: Double,
+    var quantity: Int = 1
 )
+
 
 
 

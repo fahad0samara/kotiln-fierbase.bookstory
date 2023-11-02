@@ -11,7 +11,9 @@ import javax.inject.Inject
 class ItemRepository @Inject constructor(private val itemDao: ItemDao) {
     suspend fun insertItem(item: Item) = itemDao.insert(item)
 
-     suspend fun deleteItem(item: Item) = itemDao.delete(item)
+    suspend fun deleteItem(item: Item) = itemDao.delete(item)
+
+    suspend fun deleteAllItems() = itemDao.deleteAllItems()
 
     fun getAllItems(): Flow<List<Item>> {
         return itemDao.getAllItems()
@@ -21,5 +23,13 @@ class ItemRepository @Inject constructor(private val itemDao: ItemDao) {
 
     suspend fun getAllItemNames(): List<String> {
         return itemDao.getAllItemNames()
+    }
+
+    suspend fun incrementItemQuantity(itemId: Long) {
+        itemDao.incrementItemQuantity(itemId)
+    }
+
+    suspend fun decrementItemQuantity(itemId: Long) {
+        itemDao.decrementItemQuantity(itemId)
     }
 }

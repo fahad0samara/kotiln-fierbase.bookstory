@@ -15,7 +15,7 @@ interface ItemDao {
     @Query("SELECT * FROM items")
     fun getAllItems(): Flow<List<Item>>
 
-    @Query("SELECT name FROM items")
+    @Query("SELECT title FROM items")
     suspend fun getAllItemNames(): List<String>
 
     @Query("SELECT * FROM items WHERE id = :itemId")
@@ -24,4 +24,13 @@ interface ItemDao {
     @Delete
     suspend fun delete(item: Item)
 
+    @Query("DELETE FROM items")
+    suspend fun deleteAllItems()
+
+    @Query("UPDATE items SET quantity = quantity + 1 WHERE id = :itemId")
+    suspend fun incrementItemQuantity(itemId: Long)
+
+    @Query("UPDATE items SET quantity = quantity - 1 WHERE id = :itemId")
+    suspend fun decrementItemQuantity(itemId: Long)
 }
+

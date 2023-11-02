@@ -191,7 +191,7 @@ fun CartScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(5.dp))
 
                 Button(
                     onClick = {
@@ -199,7 +199,7 @@ fun CartScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(end = 8.dp),
+                        .padding(4.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Green,
                         contentColor = Color.White

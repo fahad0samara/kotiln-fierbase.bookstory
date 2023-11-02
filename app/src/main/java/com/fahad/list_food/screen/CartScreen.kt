@@ -3,6 +3,7 @@ package com.fahad.list_food.screen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,6 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.fahad.list_food.R
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.entities.Item
 import com.fahad.list_food.model.FoodViewModel
@@ -67,44 +70,47 @@ fun CartScreen(
     val cartItems by viewModel.cart.collectAsState(emptyList())
 
     var totalPrice by remember { mutableStateOf(0.0) }
+    val taxRate = 0.1 // 10% tax rate
+
+    // Calculate the initial total price based on cart items
+    if (cartItems.isNotEmpty()) {
+        totalPrice = cartItems.map { it.price * it.quantity }.reduce { acc, price -> acc + price }
+    }
+
+    val taxAmount = totalPrice * taxRate
+    val totalPriceWithTax = totalPrice + taxAmount
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         Row(
-            modifier= Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
-
-
-        )
-
-        {
+        ) {
             Text(
-                text = "Cart",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                text = "Cart", fontSize = 20.sp, fontWeight = FontWeight.Bold
             )
             Button(
                 onClick = {
                     viewModel.clearCart()
                     totalPrice = 0.0
                 },
-                modifier = Modifier
-                    .padding(16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                modifier = Modifier.padding(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red, contentColor = Color.White
+                ),
             ) {
-                Text(text = "Clear Cart", color = Color.White)
+                Text(text = "Clear Cart")
             }
-
         }
 
-
-
         if (cartItems.isNotEmpty()) {
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier.weight(1f)
+            ) {
                 items(cartItems) { item ->
                     CartItemRow(item, viewModel) { priceChange ->
                         totalPrice += priceChange
@@ -113,40 +119,98 @@ fun CartScreen(
             }
 
 
+            Column(
+                modifier = Modifier.fillMaxWidth().
+                padding(16.dp).
+                shadow(4.dp, RoundedCornerShape(16.dp)).
+                clip(RoundedCornerShape(16.dp)).
+                background(MaterialTheme.colorScheme.surface)
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Total Price: $${totalPrice}",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Subtotal",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = "$${totalPrice}",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(Color.Gray)
+                        .padding(vertical = 8.dp)
                 )
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp, top = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Button(
-                        onClick = {
-                            // Implement checkout logic here
-                        }
-                    ) {
-                        Text(text = "Checkout")
-                    }
+                    Text(
+                        text = "Tax (${(taxRate * 100).toInt()}%)",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                    Text(
+                        text = "$${taxAmount}",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
 
-                    Button(
-                        onClick = {
-                            // Implement cancel logic here
-                        }
-                    ) {
-                        Text(text = "Cancel")
-                    }
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(Color.Gray)
+                        .padding(vertical = 2.dp)
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Total Price",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = "$${totalPriceWithTax}",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = {
+                        // Implement checkout logic here
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(end = 8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Green,
+                        contentColor = Color.White
+                    ),
+                ) {
+                    Text(text = "Checkout")
                 }
             }
+
+
+
         } else {
             Text(
                 text = "Your cart is empty.",
@@ -159,11 +223,11 @@ fun CartScreen(
     }
 }
 
+
+
 @Composable
 fun CartItemRow(
-    item: Item,
-    viewModel: FoodViewModel,
-    onPriceChange: (Double) -> Unit
+    item: Item, viewModel: FoodViewModel, onPriceChange: (Double) -> Unit
 ) {
     var quantity by remember { mutableStateOf(item.quantity) }
     var priceChange by remember { mutableStateOf(0.0) }
@@ -183,18 +247,17 @@ fun CartItemRow(
             Image(
                 painter = painterResource(id = item.imageResId),
                 contentDescription = null,
-                modifier = Modifier.size(100.dp).padding(8.dp),
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(8.dp),
                 contentScale = ContentScale.Crop
             )
 
             Column(
-                modifier = Modifier
-                    .weight(1f)
+                modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = item.title,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    text = item.title, fontSize = 18.sp, fontWeight = FontWeight.Bold
                 )
 
                 Text(
@@ -202,86 +265,78 @@ fun CartItemRow(
                     fontSize = 16.sp,
                     color = if (isSystemInDarkTheme()) Color.Gray else Color.Black
                 )
-            }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(1.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    ActionIconButton(onClick = {
+                        if (quantity > 1) {
+                            viewModel.decrementItem(item)
+                            quantity--
+                            priceChange -= item.price
+                            onPriceChange(priceChange)
+                        }
+                    }, content = {
+                        Image(
+                            painter = painterResource(id = R.drawable.baseline_list_alt_24),
 
-            IconButton(
-                onClick = {
-                    viewModel.deleteItem(item)
-                    priceChange = -item.price * quantity
-                    onPriceChange(priceChange)
-                },
-                modifier = Modifier.padding(end = 8.dp, top = 8.dp),
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = Color.Red
+                            contentDescription = "Decrement",
+
+
+                            )
+                    }, backgroundColor = Color.Red // Background color for the decrement button
+                    )
+
+                    Text(text = quantity.toString())
+
+                    ActionIconButton(
+                        onClick = {
+                            viewModel.incrementItem(item)
+                            quantity++
+                            priceChange += item.price
+                            onPriceChange(priceChange)
+                        },
+                        content = {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Increment",
+                                tint = Color.White
+                            )
+                        },
+                        backgroundColor = Color.Green // Background color for the increment button
                     )
                 }
-            )
+            }
+
+            IconButton(onClick = {
+                viewModel.deleteItem(item)
+                priceChange = -item.price * quantity
+                onPriceChange(priceChange)
+            }, modifier = Modifier.padding(end = 8.dp, top = 8.dp), content = {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = Color.Red
+                )
+            })
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            ActionIconButton(
-                onClick = {
-                    if (quantity > 1) {
-                        viewModel.decrementItem(item)
-                        quantity--
-                        priceChange -= item.price
-                        onPriceChange(priceChange)
-                    }
-                },
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = "Decrement",
-                        tint = Color.White
-                    )
-                },
-                backgroundColor = Color.Red // Background color for the decrement button
-            )
-
-            Text(text = quantity.toString())
-
-            ActionIconButton(
-                onClick = {
-                    viewModel.incrementItem(item)
-                    quantity++
-                    priceChange += item.price
-                    onPriceChange(priceChange)
-                },
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Increment",
-                        tint = Color.White
-                    )
-                },
-                backgroundColor = Color.Green // Background color for the increment button
-            )
-        }
 
     }
 }
 
 @Composable
 fun ActionIconButton(
-    onClick: () -> Unit,
-    content: @Composable () -> Unit,
-    backgroundColor: Color
+    onClick: () -> Unit, content: @Composable () -> Unit, backgroundColor: Color
 ) {
     Box(
         modifier = Modifier
-            .size(36.dp)
-            .background(backgroundColor,CircleShape)
-            .clickable { onClick() },
-        contentAlignment = Alignment.Center
+            .size(25.dp)
+            .background(backgroundColor, CircleShape)
+            .clickable { onClick() }, contentAlignment = Alignment.Center
     ) {
         content()
     }

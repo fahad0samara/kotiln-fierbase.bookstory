@@ -1,4 +1,4 @@
-package com.fahad.list_food
+package com.fahad.list_food.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.fahad.list_food.navigation.AppNavigation
+import com.fahad.list_food.ui.navigation.AppNavigation
 import com.fahad.list_food.model.FoodViewModel
 import com.fahad.list_food.ui.theme.ListfoodTheme
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.fahad.list_food.navigation
+package com.fahad.list_food.ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -24,17 +24,19 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.fahad.list_food.model.FavoriteViewModel
 import com.fahad.list_food.model.FoodViewModel
-import com.fahad.list_food.screen.CartScreen
-import com.fahad.list_food.screen.FavoriteItemsScreen
-import com.fahad.list_food.screen.ItemDetailsScreen
-import com.fahad.list_food.screen.ItemList
-import com.fahad.list_food.screen.SearchScreen
+import com.fahad.list_food.ui.screen.CartScreen
+import com.fahad.list_food.ui.screen.FavoriteItemsScreen
+import com.fahad.list_food.ui.screen.ItemDetailsScreen
+import com.fahad.list_food.ui.screen.ItemList
+import com.fahad.list_food.ui.screen.SearchScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     val viewModel: FoodViewModel = hiltViewModel()
     val favoriteViewModel: FavoriteViewModel = hiltViewModel()
+
+
 
     Scaffold(
         bottomBar = {

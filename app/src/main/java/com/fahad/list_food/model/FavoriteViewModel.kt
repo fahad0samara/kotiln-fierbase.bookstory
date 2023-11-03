@@ -15,7 +15,9 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(private val favoriteRepository: FavoriteRepository):ViewModel(){
     val favorite: Flow<List<FavoriteItem>> = favoriteRepository.getAllFavorite()
 
-      fun addToFavorite(item: BookItem) {
+
+
+    fun addToFavorite(item: BookItem) {
         val newItem = FavoriteItem(
             title = item.title,
             description = item.description,

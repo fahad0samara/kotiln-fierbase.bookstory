@@ -1,4 +1,4 @@
-package com.fahad.list_food.screen
+package com.fahad.list_food.ui.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image

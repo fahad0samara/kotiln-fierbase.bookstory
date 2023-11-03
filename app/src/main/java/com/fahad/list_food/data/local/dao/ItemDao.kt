@@ -32,5 +32,8 @@ interface ItemDao {
 
     @Query("UPDATE items SET quantity = quantity - 1 WHERE id = :itemId")
     suspend fun decrementItemQuantity(itemId: Long)
+
+
+
 }
 

@@ -2,6 +2,7 @@ package com.fahad.list_food.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.fahad.list_food.data.local.dao.FavoriteDao
 import com.fahad.list_food.data.local.dao.ItemDao
 import com.fahad.list_food.data.local.database.AppDatabase
 import dagger.Module
@@ -25,5 +26,8 @@ object AppModule {
     }
 
     @Provides
-    fun provideItemDao(database: AppDatabase): ItemDao=database.itemDao()
+    fun provideItemDao(database: AppDatabase): ItemDao = database.itemDao()
+
+    @Provides
+    fun provideFavoriteDao(database: AppDatabase): FavoriteDao = database.favoriteDao()
 }

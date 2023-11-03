@@ -120,15 +120,18 @@ fun CartScreen(
 
 
             Column(
-                modifier = Modifier.fillMaxWidth().
-                padding(16.dp).
-                shadow(4.dp, RoundedCornerShape(16.dp)).
-                clip(RoundedCornerShape(16.dp)).
-                background(MaterialTheme.colorScheme.surface)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .shadow(4.dp, RoundedCornerShape(16.dp))
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surface)
 
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -137,9 +140,7 @@ fun CartScreen(
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = "$${totalPrice}",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal
+                        text = "$${totalPrice}", fontSize = 16.sp, fontWeight = FontWeight.Normal
                     )
                 }
 
@@ -152,7 +153,9 @@ fun CartScreen(
                 )
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp, top = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp, top = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -161,9 +164,7 @@ fun CartScreen(
                         fontWeight = FontWeight.Normal
                     )
                     Text(
-                        text = "$${taxAmount}",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal
+                        text = "$${taxAmount}", fontSize = 16.sp, fontWeight = FontWeight.Normal
                     )
                 }
 
@@ -176,7 +177,9 @@ fun CartScreen(
                 )
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -201,14 +204,12 @@ fun CartScreen(
                         .fillMaxWidth()
                         .padding(4.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Green,
-                        contentColor = Color.White
+                        containerColor = Color.Green, contentColor = Color.White
                     ),
                 ) {
                     Text(text = "Checkout")
                 }
             }
-
 
 
         } else {
@@ -222,7 +223,6 @@ fun CartScreen(
         }
     }
 }
-
 
 
 @Composable

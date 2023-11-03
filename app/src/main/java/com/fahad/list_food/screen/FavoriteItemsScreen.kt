@@ -1,6 +1,9 @@
 package com.fahad.list_food.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,10 +14,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,13 +43,9 @@ import com.fahad.list_food.model.FavoriteViewModel
 
 @Composable
 fun FavoriteItemsScreen(
-    viewModel: FavoriteViewModel,
-    navController: NavController
+    viewModel: FavoriteViewModel, navController: NavController
 ) {
-    val favoriteItems by viewModel.favorite.collectAsState(
-        initial = emptyList()
-    )
-
+    val favoriteItems by viewModel.favorite.collectAsState(emptyList())
 
     Column(
         modifier = Modifier
@@ -48,27 +53,21 @@ fun FavoriteItemsScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Favorite Items",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            text = "Favorite Items", fontSize = 24.sp, fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         if (favoriteItems.isEmpty()) {
             Text(
-                text = "You have no favorite items.",
-                fontSize = 18.sp
+                text = "You have no favorite items.", fontSize = 18.sp
             )
         } else {
             LazyColumn {
-                items(favoriteItems.size) { index ->
-                    val item = favoriteItems[index]
-                    FavoriteItemCard(
-                        item = item
-                    ) {
-                        viewModel.deleteFromFavorites(item)
-                    }
+                items(favoriteItems) { item ->
+                    FavoriteItemCard(item = item,
+                        navController = navController,
+                        onDeleteClick = { viewModel.deleteFromFavorites(item) })
                 }
             }
         }
@@ -77,49 +76,70 @@ fun FavoriteItemsScreen(
 
 @Composable
 fun FavoriteItemCard(
-    item: FavoriteItem,
-    onDeleteClick: () -> Unit
+    item: FavoriteItem, onDeleteClick: () -> Unit,navController: NavController
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painterResource(id = item.imageResId),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(shape = RoundedCornerShape(4.dp)),
-                contentScale = ContentScale.Crop
+        shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.cardElevation(
+               defaultElevation = 8.dp,
+                pressedElevation = 8.dp,
+                disabledElevation = 0.dp
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
 
-            Column {
-                Text(
-                    text = item.title,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = item.imageResId),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(shape = RoundedCornerShape(4.dp)),
+                    contentScale = ContentScale.Crop
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-                Button(
-                    onClick = onDeleteClick,
-                    modifier = Modifier.align(Alignment.End),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                Column(
+                    modifier = Modifier.weight(1f)
                 ) {
-                    Text(text = "Remove")
+                    Text(
+                        text = item.title, fontSize = 18.sp, fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "${item.price}$",
+                         fontSize = 18.sp, fontWeight = FontWeight.Bold
+                    )
+                }
+
+                IconButton(
+                    onClick = onDeleteClick,
+                    modifier = Modifier
+
+                        .clip(shape = CircleShape).background(Color.Red) .size(40.dp)
+                ) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete",
+                        tint = Color.White)
+
                 }
             }
         }
     }
 }
+
+

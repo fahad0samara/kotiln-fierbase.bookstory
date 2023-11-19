@@ -1,10 +1,9 @@
-package com.fahad.list_food.ui.navigation
+package com.fahad.list_food.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -24,27 +23,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.fahad.list_food.model.FavoriteViewModel
 import com.fahad.list_food.model.FoodViewModel
-import com.fahad.list_food.ui.screen.CartScreen
-import com.fahad.list_food.ui.screen.FavoriteItemsScreen
+import com.fahad.list_food.ui.screen.cart.CartScreen
+import com.fahad.list_food.ui.screen.favorite.FavoriteItemsScreen
 import com.fahad.list_food.ui.screen.ItemDetailsScreen
 import com.fahad.list_food.ui.screen.ItemList
 import com.fahad.list_food.ui.screen.SearchScreen
 
 @Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
-    val viewModel: FoodViewModel = hiltViewModel()
-    val favoriteViewModel: FavoriteViewModel = hiltViewModel()
-
+fun AppNavigation(
+    navController: NavHostController,
+    viewModel: FoodViewModel,
+    favoriteViewModel: FavoriteViewModel
+) {
     val favoriteItems by favoriteViewModel.favorite.collectAsState(emptyList())
     val favoriteItemCount = favoriteItems.size
 
@@ -113,6 +111,7 @@ fun AppNavigation() {
             }
         }
     ) { innerPadding ->
+        // Make sure to create the NavHost only once
         NavHost(
             navController = navController,
             startDestination = "foodItems",
@@ -148,10 +147,6 @@ fun AppNavigation() {
         }
     }
 }
-
-
-
-
 
 
 

@@ -6,7 +6,7 @@ import com.fahad.list_food.data.local.BookItem
 
 
 import com.fahad.list_food.data.local.availableBooks
-import com.fahad.list_food.data.local.entities.FavoriteItem
+
 
 import com.fahad.list_food.data.local.entities.Item
 import com.fahad.list_food.data.local.repository.ItemRepository
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class FoodViewModel @Inject constructor(private val itemRepository: ItemRepository) : ViewModel() {
+class FoodViewModel @Inject constructor(private val itemRepository: ItemRepository):ViewModel() {
     val cart: Flow<List<Item>> = itemRepository.getAllItems()
 
 

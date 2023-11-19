@@ -1,11 +1,11 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
-    id ("kotlin-kapt")
+  alias(libs.plugins.androidApplication)
+  alias(libs.plugins.kotlinAndroid)
 
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
+  alias(libs.plugins.googleServices)
+  alias(libs.plugins.hiltAndroid)
+  alias(libs.plugins.kotlinKsp)
 }
 
 android {
@@ -45,7 +45,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
     packaging {
         resources {
@@ -64,7 +64,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation(libs.books)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -73,9 +73,8 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    //Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    ksp("com.google.dagger:hilt-android-compiler:2.48")
+
+
 
 
 
@@ -86,17 +85,45 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.6.0")
     ksp("androidx.room:room-compiler:$room_version")
 
-    //lifecycle
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-    //navigation
-    val nav_version = "2.7.4"
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    //lottie
-    implementation( "com.airbnb.android:lottie-compose:5.2.0")
-}
+  //Dagger Hilt
+  implementation(libs.hilt.android)
+  ksp(libs.hiltAndroidCompiler)
+  //Room
+  implementation(libs.androidx.room.runtime.v260)
+  ksp(libs.androidx.room.compiler.v260)
+  implementation (libs.androidx.room.ktx.v260)
 
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
+  //lifecycle
+  implementation(libs.androidx.lifecycle.viewmodel.compose.v262)
+  //navigation
+  implementation(libs.navigation.compose)
+  implementation(libs.androidx.hilt.navigation.compose.v100)
+
+
+
+
+
+
+  //firebase
+  implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+  //noinspection UseTomlInstead
+  implementation("com.google.firebase:firebase-analytics-ktx")
+  implementation("com.google.firebase:firebase-auth-ktx")
+  implementation(libs.firebase.storage.ktx)
+
+
+
+
+  //phothoView
+  implementation (libs.coil.compose)
+
+
+
+
+}
+ksp {
+  // All KSP Gradle plugin options
+  arg("com.google.devtools.ksp.incremental.apt", "true")
+
+
 }

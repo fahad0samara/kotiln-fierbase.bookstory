@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.fahad.list_food" />
+                  <option name="mobileSdkAppId" value="1:1007746925100:android:a4400204119038bfd98789" />
+                  <option name="projectId" value="book-app-d3f01" />
+                  <option name="projectNumber" value="1007746925100" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

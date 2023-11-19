@@ -41,7 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.entities.FavoriteItem
 import com.fahad.list_food.model.FavoriteViewModel
@@ -53,7 +53,7 @@ fun ItemDetailsScreen(
     item: BookItem,
     viewModel: FoodViewModel,
     favoriteViewModel: FavoriteViewModel, // Inject the FavoriteViewModel
-    navController: NavHostController
+    navController: NavController
 ) {
     val isBookInFavorites by favoriteViewModel.isBookInFavorites(item.title).collectAsState(false)
 

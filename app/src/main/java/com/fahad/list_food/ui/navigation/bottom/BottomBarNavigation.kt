@@ -46,7 +46,7 @@ fun BottomBarNavigation(navController: NavHostController,
     startDestination = BottomBar.Home.route
   ) {
     composable(route = BottomBar.Home.route) {
-      ItemList(viewModel, navController)
+      ItemList(viewModel, navController,userDataViewModel)
     }
 
     composable(route = BottomBar.Cart.route) {

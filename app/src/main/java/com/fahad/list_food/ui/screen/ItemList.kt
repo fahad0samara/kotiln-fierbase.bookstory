@@ -2,12 +2,10 @@ package com.fahad.list_food.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,13 +14,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
@@ -32,43 +32,37 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.fahad.list_food.R
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.BookType
-
 import com.fahad.list_food.model.FoodViewModel
+import java.time.LocalTime
+import kotlin.io.path.name
 
 //@Composable
 //fun ItemList(viewModel: FoodViewModel, navController: NavController) {
@@ -133,103 +127,159 @@ import com.fahad.list_food.model.FoodViewModel
 //
 //    }}
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun ItemList(
-    viewModel: FoodViewModel,
-    navController: NavController
+  viewModel: FoodViewModel,
+  navController: NavController,
+    userDataViewModel: UserDataViewModel
 ) {
-    val selectedCategory = remember { mutableStateOf(BookType.Fiction) }
-    val itemsForCategory = viewModel.groupedItems[selectedCategory.value] ?: emptyList()
+  val selectedCategory = remember { mutableStateOf(BookType.Fiction) }
+  val itemsForCategory = viewModel.groupedItems[selectedCategory.value] ?: emptyList()
+  val user by userDataViewModel.user.collectAsState() // Observe the user state
+
+  Column(
+    modifier = Modifier
+      .fillMaxSize()
+      .background(MaterialTheme.colorScheme.background)
+      .padding(top = 15.dp)
 
 
-    Column(
-        modifier = Modifier.fillMaxSize()
+      // Add padding for status bar
+      .systemBarsPadding().padding(bottom = 66.dp)
+
+
+
+  ){
+  user?.let { currentUser ->
+    // Display user's name and image
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(
+         horizontal = 16.dp
+
+        ),
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        // Search bar with TextField
+      val greeting = when (LocalTime.now().hour) {
+        in 0..11 -> "Good morning"
+        in 12..17 -> "Good afternoon"
+        else -> "Good evening"
+      }
 
-        OutlinedTextField(
-            value = "",
-            onValueChange = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .height(50.dp)
-                .onFocusChanged {
-                    if (it.isFocused) {
-                        navController.navigate("searchScreen")
-                    }
-                },
-
-
-            trailingIcon = {
-                Icon(
-                    Icons.Default.Search,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(24.dp),
-
-                    contentDescription = null,
-                    tint = Color(0xFF91F1FF)
-                )
-            },
-            colors = TextFieldDefaults.colors(
-
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color(0xFF91F1FF),
-                disabledContainerColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                disabledTextColor = Color.Transparent,
-                disabledPlaceholderColor = Color.Transparent,
-                disabledLeadingIconColor = Color.Transparent,
-                disabledTrailingIconColor = Color.Transparent,
+        Column {
+            Text(
+              text = "$greeting, ${currentUser.displayName}",
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp
+            )
+            Text(text = "Let's find your favorite book")
+        }
 
 
-                ),
-            shape = CutCornerShape(15.dp),
+
+      Spacer(modifier = Modifier.width(16.dp))
 
 
-            placeholder = { Text("Search for books") }
-        )
-
-        CategorySelection(selectedCategory)
-
-        FoodList(itemsForCategory, navController)
+      Image(
+        painterResource(id = R.drawable.book9),
+        contentDescription = null,
+        modifier = Modifier
+          .size(60.dp)
+          .clip(CircleShape)
+          .background(MaterialTheme.colorScheme.primary)
+      )
     }
+  }
+
+
+
+
+  // Search bar with TextField
+
+    OutlinedTextField(
+      value = "",
+      onValueChange = { },
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)
+        .height(50.dp)
+        .onFocusChanged {
+          if (it.isFocused) {
+            navController.navigate("searchScreen")
+          }
+        },
+
+
+      trailingIcon = {
+        Icon(
+          Icons.Default.Search,
+          modifier = Modifier
+            .padding(8.dp)
+            .size(24.dp),
+
+          contentDescription = null,
+          tint = Color(0xFF91F1FF)
+        )
+      },
+      colors = TextFieldDefaults.colors(
+
+        unfocusedIndicatorColor = Color.Transparent,
+        focusedIndicatorColor = Color(0xFF91F1FF),
+        disabledContainerColor = Color.Transparent,
+        disabledIndicatorColor = Color.Transparent,
+        disabledTextColor = Color.Transparent,
+        disabledPlaceholderColor = Color.Transparent,
+        disabledLeadingIconColor = Color.Transparent,
+        disabledTrailingIconColor = Color.Transparent,
+
+
+        ),
+      shape = CutCornerShape(15.dp),
+
+
+      placeholder = { Text("Search for books") }
+    )
+
+    CategorySelection(selectedCategory)
+
+    FoodList(itemsForCategory, navController)
+  }
 }
 
 
 @Composable
 fun CategorySelection(selectedCategory: MutableState<BookType>) {
-    LazyRow(
+  LazyRow(
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(top = 8.dp)
+      .height(50.dp),
+    horizontalArrangement = Arrangement.spacedBy(2.dp),
+
+    ) {
+    items(BookType.entries) { category ->
+      Button(
+        onClick = { selectedCategory.value = category },
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-            .height(50.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
+          .padding(start = 5.dp, end = 10.dp),
+        colors = ButtonDefaults.buttonColors(
 
-        ) {
-        items(BookType.entries) { category ->
-            Button(
-                onClick = { selectedCategory.value = category },
-                modifier = Modifier
-                    .padding(start = 5.dp, end = 10.dp),
-                colors = ButtonDefaults.buttonColors(
-
-                    containerColor = if (selectedCategory.value == category) Color(0xFF006973) else Color(
-                        0xFF91F1FF
-                    ),
-                ),
-            ) {
-                Text(
-                    text = category.name,
-                    color = if (selectedCategory.value == category) Color.White else Color.Black
-                )
-            }
-        }
+          containerColor = if (selectedCategory.value == category) Color(0xFF006973) else Color(
+            0xFF91F1FF
+          ),
+        ),
+      ) {
+        Text(
+          text = category.name,
+          color = if (selectedCategory.value == category) Color.White else Color.Black
+        )
+      }
     }
+  }
 }
-
 @Composable
 fun FoodList(
     items: List<BookItem>,
@@ -259,27 +309,27 @@ fun FoodItem(
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(2.dp),
+          .fillMaxWidth()
+          .padding(2.dp),
         onClick = { onTap(food) }
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    color = if (isSystemInDarkTheme()) {
-                        colorResource(id = R.color.black)
-                    } else {
-                        colorResource(id = R.color.white)
-                    }
-                )
+              .fillMaxSize()
+              .background(
+                color = if (isSystemInDarkTheme()) {
+                  colorResource(id = R.color.black)
+                } else {
+                  colorResource(id = R.color.white)
+                }
+              )
         ) {
             Image(
                 painter = painterResource(id = food.imageResId),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 170.dp, max = 170.dp),
+                  .fillMaxWidth()
+                  .heightIn(min = 170.dp, max = 170.dp),
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -287,8 +337,8 @@ fun FoodItem(
                 text = food.author,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(horizontal = 4.dp)
-                    .fillMaxWidth(),
+                  .padding(horizontal = 4.dp)
+                  .fillMaxWidth(),
                 color = if (isSystemInDarkTheme()) {
                     Color(0xFF91F1FF)
 
@@ -303,8 +353,8 @@ fun FoodItem(
             Spacer(modifier = Modifier.height(8.dp))
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
+                  .fillMaxWidth()
+                  .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {

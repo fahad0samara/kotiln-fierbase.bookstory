@@ -50,7 +50,13 @@ fun RootNavigation(navController: NavHostController) {
     delay(1000) // 2 seconds delay, adjust as needed
 
     // Check authentication state
-    checkAuthenticationState(navController, userDataViewModel)
+    if (Firebase.auth.currentUser == null) {
+      // Navigate to the login screen if the user is not authenticated
+      navController.navigate(AuthScreen.LOGIN.route)
+    } else {
+      // Navigate to the home screen if the user is authenticated
+      navController.navigate(Graph.HOME)
+    }
   }
 
   NavHost(
@@ -77,29 +83,7 @@ fun RootNavigation(navController: NavHostController) {
   }
 }
 
-fun checkAuthenticationState(navController: NavController, userDataViewModel: UserDataViewModel) {
-  val auth = Firebase.auth
-  val currentUser = auth.currentUser
 
-  if (currentUser != null) {
-    // Get user data from Firebase
-    userDataViewModel.getUserData()
-
-    // Navigate to Home Screen
-    navController.navigate(Graph.HOME) {
-      popUpTo(Graph.AUTHENTICATION) {
-        inclusive = true
-      }
-    }
-  } else {
-    // Navigate to Login Screen
-    navController.navigate(AuthScreen.LOGIN.route) {
-      popUpTo(Graph.AUTHENTICATION) {
-        inclusive = true
-      }
-    }
-  }
-}
 
 object Graph {
   const val ROOT = "root_graph"

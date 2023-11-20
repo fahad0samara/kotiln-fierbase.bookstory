@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BottomBarRoot(navController: NavHostController = rememberNavController()
+
 ) {
   val viewModel: FoodViewModel = hiltViewModel()
   val favoriteViewModel: FavoriteViewModel = hiltViewModel()

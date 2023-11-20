@@ -2,7 +2,7 @@ package com.fahad.list_food.ui.navigation.bottom
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-
+import androidx.compose.runtime.LaunchedEffect
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,7 +25,6 @@ import com.fahad.list_food.ui.screen.auth.profile.EditProfileScreen
 import com.fahad.list_food.ui.screen.auth.profile.ProfileScreen
 import com.fahad.list_food.ui.screen.cart.CartScreen
 import com.fahad.list_food.ui.screen.favorite.FavoriteItemsScreen
-import com.fahad.list_food.data.local.BookItem
 
 @Composable
 fun BottomBarNavigation(navController: NavHostController,
@@ -33,6 +32,13 @@ fun BottomBarNavigation(navController: NavHostController,
   val userDataViewModel: UserDataViewModel = hiltViewModel()
   val viewModel: FoodViewModel = hiltViewModel()
   val favoriteViewModel: FavoriteViewModel = hiltViewModel()
+  LaunchedEffect(userDataViewModel.user) {
+    userDataViewModel.getUserData() // Trigger fetching user data if not already done
+
+  }
+
+
+
 
   NavHost(
     navController = navController,
@@ -53,11 +59,12 @@ fun BottomBarNavigation(navController: NavHostController,
     }
 
 
-      composable(route =  BottomBar.Profile.route) {
-        ProfileScreen(
-          navController = navController, userDataViewModel = userDataViewModel
-        )
-      }
+    composable(route = BottomBar.Profile.route) {
+      ProfileScreen(
+        navController = navController,
+        userDataViewModel = userDataViewModel
+      )
+    }
       composable(route =  "edit_profile") {
         EditProfileScreen(
           navController = navController, userDataViewModel = userDataViewModel

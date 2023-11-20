@@ -6,11 +6,8 @@ import com.fahad.auth_firebase.domain.repository.AuthRepository
 import com.fahad.list_food.data.local.dao.FavoriteDao
 import com.fahad.list_food.data.local.dao.ItemDao
 import com.fahad.list_food.data.local.database.AppDatabase
-import com.fahad.list_food.data.local.repository.FavoriteRepository
-import com.fahad.list_food.data.local.repository.ItemRepository
 import com.fahad.list_food.data.repository.AuthRepositoryImpl
-import com.fahad.list_food.model.FavoriteViewModel
-import com.fahad.list_food.model.FoodViewModel
+
 import com.fahad.list_food.ui.screen.UserDataViewModel
 import dagger.Module
 import dagger.Provides
@@ -50,6 +47,9 @@ object AppModule {
     )
   }
 }
+
+
+
 
 
 

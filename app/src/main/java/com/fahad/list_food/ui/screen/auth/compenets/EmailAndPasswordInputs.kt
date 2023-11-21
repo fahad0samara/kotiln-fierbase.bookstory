@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun EmailAndPasswordInputs(
@@ -38,7 +39,7 @@ fun EmailAndPasswordInputs(
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(0.dp, 16.dp, 0.dp, 0.dp)
+                .padding(0.dp, MaterialTheme.dimens.medium1, 0.dp, 0.dp)
         )
     }
 
@@ -52,7 +53,9 @@ fun EmailAndPasswordInputs(
         onValueChange = onEmailChange,
         label = { Text("Email") },
         shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().
+        padding(0.dp, MaterialTheme.dimens.medium1, 0.dp, 0.dp)
+
     )
 
     OutlinedTextField(
@@ -67,7 +70,7 @@ fun EmailAndPasswordInputs(
         shape = MaterialTheme.shapes.large,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 16.dp, 0.dp, 0.dp)
+          .padding(0.dp, MaterialTheme.dimens.medium1, 0.dp, 0.dp)
     )
 
 

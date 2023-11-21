@@ -24,6 +24,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.transform.CircleCropTransformation
+import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun AsyncImageProfile(photoUrl: String?) {
@@ -37,7 +38,7 @@ fun AsyncImageProfile(photoUrl: String?) {
 
     Box(
         modifier = Modifier
-            .size(180.dp)
+            .size(MaterialTheme.dimens.imageSize)
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.primary)
             .border(2.dp, Color.White, CircleShape)

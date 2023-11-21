@@ -4,7 +4,6 @@ package com.fahad.auth_firebase.ui.screen.register
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,16 +34,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fahad.auth_fierbase_bottomnavigation.ui.screen.navigation.auth.AuthScreen
 import com.fahad.auth_firebase.domain.model.Response
-import com.fahad.auth_firebase.ui.screen.compenets.DisplayError
+import com.fahad.list_food.ui.screen.auth.compenets.DisplayError
 import com.fahad.auth_firebase.ui.screen.compenets.EmailAndPasswordInputs
-import com.fahad.auth_firebase.ui.screen.compenets.NavigationText
+import com.fahad.list_food.ui.screen.auth.compenets.NavigationText
 import com.fahad.auth_firebase.util.Button.LoadingButton
 import com.fahad.auth_firebase.util.image.AsyncImageProfile
 import com.fahad.list_food.ui.screen.auth.register.RegisterViewModel
+import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun RegisterScreen(
@@ -57,7 +56,7 @@ fun RegisterScreen(
     var photoUri by rememberSaveable { mutableStateOf<Uri?>(null) }
     val registrationResult by registerViewModel.registrationState.collectAsState()
 
-    println("println $registrationResult")
+
 
     // Get the result of the image picker
     val launcher = rememberLauncherForActivityResult(
@@ -69,7 +68,7 @@ fun RegisterScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(12.dp),
+            .padding(MaterialTheme.dimens.medium1),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -81,18 +80,18 @@ fun RegisterScreen(
             Text(
                 text = "Welcome to the Registration Page",
                 color = MaterialTheme.colorScheme.primary,
-                fontSize = 20.sp,
+                fontSize =MaterialTheme.typography.headlineMedium.fontSize,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = MaterialTheme.dimens.medium1)
             )
 
             Text(
                 text = "Please fill in the details below to create an account",
                 color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 16.sp,
+                fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = MaterialTheme.dimens.medium1)
             )
 
             // Center the image and show an icon if no image is selected
@@ -109,7 +108,7 @@ fun RegisterScreen(
                         contentDescription = "No photo selected",
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
-                            .size(80.dp)
+                            .size( MaterialTheme.dimens.imageSize0)
                             .align(Alignment.Center)
                             .border(2.dp, Color.Yellow, CircleShape)
                     )
@@ -120,12 +119,12 @@ fun RegisterScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 2.dp),
+                    .padding(bottom = MaterialTheme.dimens.small1),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Button(
                     onClick = { launcher.launch("image/*") },
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(MaterialTheme.dimens.small3)
                 ) {
                     Text("Select Photo")
                 }
@@ -135,8 +134,7 @@ fun RegisterScreen(
                     Button(
                         onClick = { photoUri = null },
                         modifier = Modifier
-                            .padding(8.dp)
-                            .background(MaterialTheme.colorScheme.secondary, shape = CircleShape)
+                            .padding(MaterialTheme.dimens.small3)
                     ) {
                         Text("Clear")
                     }
@@ -155,7 +153,7 @@ fun RegisterScreen(
             )
 
             // Spacer to create some space between input fields and button
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(MaterialTheme.dimens.small3))
 
             // Display error message if registrationResult is a failure
             DisplayError(registrationResult)

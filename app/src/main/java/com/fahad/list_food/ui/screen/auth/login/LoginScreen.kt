@@ -33,14 +33,15 @@ import androidx.navigation.NavController
 import com.fahad.auth_fierbase_bottomnavigation.ui.screen.navigation.auth.AuthScreen
 import com.fahad.auth_firebase.domain.model.Response
 
-import com.fahad.auth_firebase.ui.screen.compenets.DisplayError
+import com.fahad.list_food.ui.screen.auth.compenets.DisplayError
 import com.fahad.auth_firebase.ui.screen.compenets.EmailAndPasswordInputs
 
-import com.fahad.auth_firebase.ui.screen.compenets.NavigationText
+import com.fahad.list_food.ui.screen.auth.compenets.NavigationText
 
 
 import com.fahad.auth_firebase.util.Button.LoadingButton
 import com.fahad.list_food.ui.screen.auth.login.LoginViewModel
+import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun LoginScreen(
@@ -56,7 +57,7 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(MaterialTheme.dimens.medium1),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -102,7 +103,7 @@ fun LoginScreen(
                 textloading = "Login...",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp),
+                    .padding(top = MaterialTheme.dimens.medium1),
                 onClick = {
                     loginViewModel.login(email, password, navController)
                 },

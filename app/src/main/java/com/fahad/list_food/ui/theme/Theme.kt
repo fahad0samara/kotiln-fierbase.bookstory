@@ -8,16 +8,18 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-
-
-
+import com.fahad.list_food.ui.MainActivity
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -84,12 +86,15 @@ private val DarkColors = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun ListfoodTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    activity: Activity= LocalContext.current as MainActivity,
+    content: @Composable () -> Unit,
+
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -108,11 +113,54 @@ fun ListfoodTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
+  val window = calculateWindowSizeClass(activity = activity)
+  val config = LocalConfiguration.current
 
+  var typography = CompactTypography
+  var appDimens = CompactDimens
+
+  when {
+    config.screenHeightDp <= 600 && config.screenWidthDp <= 400 -> {
+      // Very Small
+      appDimens = VerySmallDimens
+      typography = VerySmallTypography
+    }
+    config.screenHeightDp <= 732 && config.screenWidthDp <= 412 -> {
+      // Compact
+      appDimens = CompactDimens
+      typography = CompactTypography
+    }
+    config.screenWidthDp < 599 -> {
+      // Compact Medium
+      appDimens = CompactMediumDimens
+      typography = CompactMediumTypography
+    }
+    config.screenWidthDp >= 599 && config.screenWidthDp < 960 -> {
+      // Medium
+      appDimens = MediumDimens
+      typography = MediumDimensTypography
+    }
+    config.screenWidthDp >= 960 && config.screenWidthDp < 1200 -> {
+      // Large
+      appDimens = LargeDimens
+      typography = LargeTypography
+    }else -> {
+      // Expanded
+      appDimens = ExpandedDimens
+      typography = ExpandedTypography
+    }
+  }
+
+
+  ProvideAppUtils(appDimens = appDimens) {
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+      colorScheme = colorScheme,
+        typography = typography,
+      content = content
     )
+  }
 }
 
+val MaterialTheme.dimens
+  @Composable
+  get() = LocalAppDimens.current

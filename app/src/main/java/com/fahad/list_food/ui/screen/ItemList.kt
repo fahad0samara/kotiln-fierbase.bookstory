@@ -61,6 +61,7 @@ import com.fahad.list_food.R
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.BookType
 import com.fahad.list_food.model.FoodViewModel
+import com.fahad.list_food.ui.theme.dimens
 import java.time.LocalTime
 import kotlin.io.path.name
 
@@ -172,10 +173,15 @@ fun ItemList(
         Column {
             Text(
               text = "$greeting, ${currentUser.displayName}",
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+
+            fontSize = MaterialTheme.typography.headlineMedium.fontSize
             )
-            Text(text = "Let's find your favorite book")
+            Text(text = "Let's find your favorite book",
+                fontSize = MaterialTheme.typography.labelMedium.fontSize,
+              //itlics
+                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+
+            )
         }
 
 

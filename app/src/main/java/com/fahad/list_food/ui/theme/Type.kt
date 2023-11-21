@@ -48,7 +48,7 @@ val VerySmallTypography = Typography(
   labelMedium = TextStyle(
     fontFamily = Roboto,
     fontWeight = FontWeight.Normal,
-    fontSize = 10.sp
+    fontSize = 8.sp
   )
 )
 
@@ -72,7 +72,7 @@ val CompactTypography = Typography(
   labelMedium = TextStyle(
     fontFamily = Roboto,
     fontWeight = FontWeight.Normal,
-    fontSize = 14.sp
+    fontSize = 12.sp
   )
 )
 
@@ -97,7 +97,8 @@ val CompactMediumTypography = Typography(
   labelMedium = TextStyle(
     fontFamily = Roboto,
     fontWeight = FontWeight.Normal,
-    fontSize = 18.sp
+    fontSize = 16.sp,
+
   )
 )
 
@@ -120,7 +121,7 @@ val MediumDimensTypography = Typography(
   labelMedium = TextStyle(
     fontFamily = Roboto,
     fontWeight = FontWeight.Normal,
-    fontSize = 27.sp
+    fontSize = 20.sp
     )
 )
 

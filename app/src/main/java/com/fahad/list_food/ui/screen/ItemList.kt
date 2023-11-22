@@ -193,7 +193,7 @@ fun ItemList(
         painterResource(id = R.drawable.book9),
         contentDescription = null,
         modifier = Modifier
-          .size(60.dp)
+          .size(MaterialTheme.dimens.logoSize2)
           .clip(CircleShape)
           .background(MaterialTheme.colorScheme.primary)
       )
@@ -210,8 +210,8 @@ fun ItemList(
       onValueChange = { },
       modifier = Modifier
         .fillMaxWidth()
-        .padding(16.dp)
-        .height(50.dp)
+        .padding(MaterialTheme.dimens.medium1)
+        .height(MaterialTheme.dimens.logoSize1)
         .onFocusChanged {
           if (it.isFocused) {
             navController.navigate("searchScreen")
@@ -223,8 +223,8 @@ fun ItemList(
         Icon(
           Icons.Default.Search,
           modifier = Modifier
-            .padding(8.dp)
-            .size(24.dp),
+            .padding(MaterialTheme.dimens.small2)
+            .size(MaterialTheme.dimens.medium2),
 
           contentDescription = null,
           tint = Color(0xFF91F1FF)
@@ -243,7 +243,7 @@ fun ItemList(
 
 
         ),
-      shape = CutCornerShape(15.dp),
+      shape = CutCornerShape(MaterialTheme.dimens.small3),
 
 
       placeholder = { Text("Search for books") }
@@ -262,7 +262,7 @@ fun CategorySelection(selectedCategory: MutableState<BookType>) {
     modifier = Modifier
       .fillMaxWidth()
       .padding(top = 8.dp)
-      .height(50.dp),
+      .height(MaterialTheme.dimens.logoSize1),
     horizontalArrangement = Arrangement.spacedBy(2.dp),
 
     ) {

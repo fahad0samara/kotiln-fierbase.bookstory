@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,8 +50,7 @@ import androidx.compose.ui.unit.sp
 import com.fahad.list_food.R
 import com.fahad.list_food.data.local.entities.Item
 import com.fahad.list_food.model.FoodViewModel
-
-@OptIn(ExperimentalMaterial3Api::class)
+import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun CartScreen(
@@ -57,7 +58,7 @@ fun CartScreen(
 ) {
     val cartItems by viewModel.cart.collectAsState(emptyList())
 
-    var totalPrice by remember { mutableStateOf(0.0) }
+    var totalPrice by remember { mutableDoubleStateOf(0.0) }
     val taxRate = 0.1 // 10% tax rate
 
     // Calculate the initial total price based on cart items
@@ -69,12 +70,14 @@ fun CartScreen(
     val totalPriceWithTax = totalPrice + taxAmount
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().navigationBarsPadding()
+          .padding(bottom = MaterialTheme.dimens.large)
     ) {
+      if (cartItems.isNotEmpty()){
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(MaterialTheme.dimens.medium1),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -86,7 +89,7 @@ fun CartScreen(
                     viewModel.clearCart()
                     totalPrice = 0.0
                 },
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(MaterialTheme.dimens.medium1),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red, contentColor = Color.White
                 ),
@@ -96,24 +99,26 @@ fun CartScreen(
         }
 
         if (cartItems.isNotEmpty()) {
-            LazyColumn(
-                modifier = Modifier.weight(1f)
-            ) {
-                items(cartItems) { item ->
-                    CartItemRow(item, viewModel) { priceChange ->
-                        totalPrice += priceChange
-                    }
-                }
+          LazyColumn(
+            modifier = Modifier.weight(1f)
+          ) {
+            items(cartItems) { item ->
+              CartItemRow(item, viewModel) { priceChange ->
+                totalPrice += priceChange
+              }
             }
+          }
+        }
 
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(MaterialTheme.dimens.medium1)
                     .shadow(4.dp, RoundedCornerShape(16.dp))
                     .clip(RoundedCornerShape(16.dp))
                     .background(MaterialTheme.colorScheme.surface)
+
 
             ) {
                 Row(
@@ -124,7 +129,7 @@ fun CartScreen(
                 ) {
                     Text(
                         text = "Subtotal",
-                        fontSize = 16.sp,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
@@ -135,8 +140,8 @@ fun CartScreen(
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(1.dp)
-                        .background(Color.Gray)
+                        .height(2.dp)
+                        .background(MaterialTheme.colorScheme.primary)
                         .padding(vertical = 8.dp)
                 )
 
@@ -148,19 +153,19 @@ fun CartScreen(
                 ) {
                     Text(
                         text = "Tax (${(taxRate * 100).toInt()}%)",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Normal
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize
+
                     )
                     Text(
-                        text = "$${taxAmount}", fontSize = 16.sp, fontWeight = FontWeight.Normal
+                        text = "$${taxAmount}", fontSize = MaterialTheme.typography.titleMedium.fontSize
                     )
                 }
 
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(1.dp)
-                        .background(Color.Gray)
+                        .height(2.dp)
+                      .background(MaterialTheme.colorScheme.primary)
                         .padding(vertical = 2.dp)
                 )
 
@@ -201,16 +206,53 @@ fun CartScreen(
 
 
         } else {
-            Text(
-                text = "Your cart is empty.",
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            )
+       Box(
+           modifier = Modifier
+               .fillMaxSize()
+               .padding(MaterialTheme.dimens.medium1),
+           contentAlignment = Alignment.Center
+         ) {
+         Column (
+              modifier = Modifier
+                 .fillMaxWidth()
+                 .padding(MaterialTheme.dimens.medium1),
+              horizontalAlignment = Alignment.CenterHorizontally
+         ){
+           Text(
+             text = "Your cart is empty " ,
+
+             fontSize = MaterialTheme.typography.titleMedium.fontSize,
+             fontWeight = FontWeight.Bold
+           )
+           Text(
+             text ="Add some items to your cart to see them here",
+
+             fontSize = MaterialTheme.typography.labelMedium.fontSize,
+             fontWeight = FontWeight.Bold
+           )
+           Image(
+               painter = painterResource(id = R.drawable.baseline_remove_24),
+               contentDescription = null,
+               modifier = Modifier
+                   .size(100.dp)
+                   .padding(8.dp),
+               contentScale = ContentScale.Crop
+           )
+           Spacer(modifier = Modifier.height(8.dp))
+
+         }
+
+
+       }
         }
     }
 }
+
+
+
+
+
+
 
 
 @Composable
@@ -269,7 +311,7 @@ fun CartItemRow(
                         }
                     }, content = {
                         Image(
-                            painter = painterResource(id = R.drawable.baseline_list_alt_24),
+                            painter = painterResource(id = R.drawable.baseline_remove_24),
 
                             contentDescription = "Decrement",
 

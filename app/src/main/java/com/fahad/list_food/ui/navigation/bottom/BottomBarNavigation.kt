@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -17,8 +17,9 @@ import com.fahad.list_food.model.FavoriteViewModel
 import com.fahad.list_food.model.FoodViewModel
 
 import com.fahad.list_food.ui.navigation.Graph
+import com.fahad.list_food.ui.screen.Home
 import com.fahad.list_food.ui.screen.ItemDetailsScreen
-import com.fahad.list_food.ui.screen.ItemList
+
 
 import com.fahad.list_food.ui.screen.UserDataViewModel
 import com.fahad.list_food.ui.screen.auth.profile.EditProfileScreen
@@ -46,7 +47,7 @@ fun BottomBarNavigation(navController: NavHostController,
     startDestination = BottomBar.Home.route
   ) {
     composable(route = BottomBar.Home.route) {
-      ItemList(viewModel, navController,userDataViewModel)
+      Home(viewModel, navController,userDataViewModel)
     }
 
     composable(route = BottomBar.Cart.route) {

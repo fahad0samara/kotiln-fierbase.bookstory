@@ -55,15 +55,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.fahad.list_food.R
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.BookType
 import com.fahad.list_food.model.FoodViewModel
 import com.fahad.list_food.ui.theme.dimens
 import java.time.LocalTime
-import kotlin.io.path.name
 
 //@Composable
 //fun ItemList(viewModel: FoodViewModel, navController: NavController) {
@@ -130,7 +127,7 @@ import kotlin.io.path.name
 
 
 @Composable
-fun ItemList(
+fun Home(
   viewModel: FoodViewModel,
   navController: NavController,
     userDataViewModel: UserDataViewModel

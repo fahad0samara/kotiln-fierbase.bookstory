@@ -19,7 +19,7 @@ import com.fahad.list_food.model.FoodViewModel
 import com.fahad.list_food.ui.navigation.Graph
 import com.fahad.list_food.ui.screen.Home
 import com.fahad.list_food.ui.screen.ItemDetailsScreen
-
+import com.fahad.list_food.ui.screen.SearchScreen
 
 import com.fahad.list_food.ui.screen.UserDataViewModel
 import com.fahad.list_food.ui.screen.auth.profile.EditProfileScreen
@@ -89,7 +89,7 @@ fun BottomBarNavigation(navController: NavHostController,
 
 
 
-//    searchNavGraph(navController = navController)
+    searchNavGraph(navController = navController)
   }
 }
 
@@ -100,6 +100,9 @@ fun NavGraphBuilder.searchNavGraph(navController: NavHostController) {
     startDestination = SearchNavGraph.Search.route
   ) {
     composable(route = SearchNavGraph.Search.route) {
+        SearchScreen(navController = navController, viewModel = hiltViewModel())
+
+
 
     }
 

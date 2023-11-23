@@ -62,10 +62,10 @@ fun RootNavigation(navController: NavHostController) {
   NavHost(
     navController = navController,
     route = Graph.ROOT,
-    startDestination = Graph.SPLASH
+    startDestination = "SPLASH"
   ) {
 
-      composable(route = Graph.SPLASH) {
+      composable(route = "SPLASH") {
         SplashScreen()
       }
     AuthNavigation(

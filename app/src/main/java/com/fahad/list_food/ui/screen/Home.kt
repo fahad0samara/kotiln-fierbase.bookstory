@@ -59,6 +59,7 @@ import com.fahad.list_food.R
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.BookType
 import com.fahad.list_food.model.FoodViewModel
+import com.fahad.list_food.ui.navigation.bottom.SearchNavGraph
 import com.fahad.list_food.ui.theme.dimens
 import java.time.LocalTime
 
@@ -211,7 +212,10 @@ fun Home(
         .height(MaterialTheme.dimens.logoSize1)
         .onFocusChanged {
           if (it.isFocused) {
-            navController.navigate("searchScreen")
+            navController.navigate(
+              SearchNavGraph.Search.route
+
+            )
           }
         },
 

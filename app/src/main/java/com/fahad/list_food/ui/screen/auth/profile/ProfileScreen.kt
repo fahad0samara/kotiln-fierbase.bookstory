@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,13 +39,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.fahad.auth_fierbase_bottomnavigation.ui.screen.navigation.auth.AuthScreen
 
 import com.fahad.auth_firebase.util.Button.LoadingButton
 import com.fahad.auth_firebase.util.snackBar.SnackbarWrapperProfile
 
 import com.fahad.auth_firebase.util.image.AsyncImageProfile
+import com.fahad.list_food.ui.navigation.Graph
 import com.fahad.list_food.ui.screen.UserDataViewModel
-import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun ProfileScreen(
@@ -70,7 +70,7 @@ fun ProfileScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-          .navigationBarsPadding()
+
             .background(largeRadialGradient)
             .padding(10.dp), contentAlignment = Alignment.TopCenter
     ) {
@@ -143,10 +143,11 @@ fun ProfileScreen(
             }
 
             Button(
-                onClick = {
-                    userDataViewModel.logout()
-                    navController.navigate("login")
-                },
+              onClick = {
+                userDataViewModel.logout()
+                navController.popBackStack(Graph.AUTHENTICATION, inclusive = true)
+                navController.navigate(AuthScreen.LOGIN.route)
+              },
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .fillMaxWidth()
@@ -209,10 +210,10 @@ fun VerifyEmailCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MaterialTheme.dimens.small1),
+            .padding(8.dp),
     ) {
         Column(
-            modifier = Modifier.padding(MaterialTheme.dimens.small1), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Text(
@@ -220,7 +221,7 @@ fun VerifyEmailCard(
                 else "Verify your email to get full access.Check your email and click on the link to verify your email",
 
 
-                modifier = Modifier.padding(MaterialTheme.dimens.small1),
+                modifier = Modifier.padding(8.dp),
 
                 fontSize = 12.sp,
                 color = Color.White,

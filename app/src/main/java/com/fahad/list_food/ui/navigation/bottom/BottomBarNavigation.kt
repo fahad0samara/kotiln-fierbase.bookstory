@@ -54,7 +54,7 @@ fun BottomBarNavigation(navController: NavHostController,
       CartScreen(viewModel)
     }
 
-    composable(route = BottomBar.Settings.route) {
+    composable(route = BottomBar.Favorite.route) {
       FavoriteItemsScreen(favoriteViewModel, navController)
 
     }

@@ -67,7 +67,7 @@ fun BottomBarItem(
 ) {
   val screens = listOf(
     BottomBar.Home,
-    BottomBar.Settings,
+    BottomBar.Favorite,
     BottomBar.Cart,
     BottomBar.Profile,
   )
@@ -98,7 +98,7 @@ fun BottomBarItem(
                 modifier = Modifier.size(24.dp)
               )
               if ((screen == BottomBar.Cart && cartItemCount > 0) ||
-                (screen == BottomBar.Settings && favoriteItemCount > 0)
+                (screen == BottomBar.Favorite && favoriteItemCount > 0)
               ) {
                 Badge(
                   count = if (screen == BottomBar.Cart) cartItemCount else favoriteItemCount,

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,6 +46,7 @@ import com.fahad.auth_firebase.util.snackBar.SnackbarWrapperProfile
 
 import com.fahad.auth_firebase.util.image.AsyncImageProfile
 import com.fahad.list_food.ui.screen.UserDataViewModel
+import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun ProfileScreen(
@@ -68,7 +70,7 @@ fun ProfileScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-
+          .navigationBarsPadding()
             .background(largeRadialGradient)
             .padding(10.dp), contentAlignment = Alignment.TopCenter
     ) {
@@ -207,10 +209,10 @@ fun VerifyEmailCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(MaterialTheme.dimens.small1),
     ) {
         Column(
-            modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.padding(MaterialTheme.dimens.small1), horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Text(
@@ -218,7 +220,7 @@ fun VerifyEmailCard(
                 else "Verify your email to get full access.Check your email and click on the link to verify your email",
 
 
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(MaterialTheme.dimens.small1),
 
                 fontSize = 12.sp,
                 color = Color.White,

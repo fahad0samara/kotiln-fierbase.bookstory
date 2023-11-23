@@ -1,6 +1,7 @@
 package com.fahad.list_food.ui.navigation.bottom
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -25,10 +26,10 @@ sealed class BottomBar(
     title = "CART",
     icon = Icons.Default.ShoppingCart
   )
-  data object Settings : BottomBar(
-    route = "SETTINGS",
-    title = "SETTINGS",
-    icon = Icons.Default.Settings
+  data object Favorite : BottomBar(
+    route = "FAVORITE",
+    title = "FAVORITE",
+    icon = Icons.Default.Favorite
   )
 
   data object Profile : BottomBar(

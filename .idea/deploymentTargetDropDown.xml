@@ -11,7 +11,16 @@
               <deviceKey>
                 <Key>
                   <type value="SERIAL_NUMBER" />
-                  <value value="192.168.165.105:5555" />
+                  <value value="192.168.229.103:5555" />
+                </Key>
+              </deviceKey>
+            </Target>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="R58RC1XR50L" />
                 </Key>
               </deviceKey>
             </Target>

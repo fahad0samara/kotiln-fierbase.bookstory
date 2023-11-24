@@ -44,17 +44,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
 import com.fahad.list_food.R
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.BookType
@@ -136,6 +142,20 @@ fun Home(
   val selectedCategory = remember { mutableStateOf(BookType.Fiction) }
   val itemsForCategory = viewModel.groupedItems[selectedCategory.value] ?: emptyList()
   val user by userDataViewModel.user.collectAsState() // Observe the user state
+  val painter = rememberAsyncImagePainter(
+    ImageRequest.Builder(LocalContext.current).data(data =
+    user?.photoUrl
+    ).apply(block = fun ImageRequest.Builder.() {
+      crossfade(true)
+      transformations(CircleCropTransformation())
+      scale(Scale.FILL)
+    }).build()
+
+    )
+
+    val currentUser = user ?: return
+
+
 
   Column(
     modifier = Modifier
@@ -143,21 +163,18 @@ fun Home(
       .background(MaterialTheme.colorScheme.background)
       .padding(top = 15.dp)
 
-
       // Add padding for status bar
-      .systemBarsPadding().padding(bottom = 66.dp)
+      .systemBarsPadding()
+      .padding(bottom = 66.dp)
 
 
 
   ){
-  user?.let { currentUser ->
-    // Display user's name and image
     Row(
       modifier = Modifier
         .fillMaxWidth()
         .padding(
-         horizontal = 16.dp
-
+          horizontal = 16.dp
         ),
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween
@@ -168,40 +185,37 @@ fun Home(
         else -> "Good evening"
       }
 
-        Column {
-            Text(
-              text = "$greeting, ${currentUser.displayName}",
-
-            fontSize = MaterialTheme.typography.headlineMedium.fontSize
-            )
-            Text(text = "Let's find your favorite book",
-                fontSize = MaterialTheme.typography.labelMedium.fontSize,
-              //itlics
-                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
-
-            )
-        }
-
-
+      Column {
+        Text(
+          text = "$greeting, ${currentUser.displayName}",
+          fontSize = MaterialTheme.typography.headlineMedium.fontSize
+        )
+        Text(
+          text = "Let's find your favorite book",
+          fontSize = MaterialTheme.typography.labelMedium.fontSize,
+          fontStyle = FontStyle.Italic,
+            color = MaterialTheme.colorScheme.primary
+        )
+      }
 
       Spacer(modifier = Modifier.width(16.dp))
 
-
+      // Display user's profile picture or a placeholder image if not available
       Image(
-        painterResource(id = R.drawable.book9),
+           painter = painter,
         contentDescription = null,
         modifier = Modifier
-          .size(MaterialTheme.dimens.logoSize2)
-          .clip(CircleShape)
-          .background(MaterialTheme.colorScheme.primary)
+          .size(50.dp)
+          .background(Color(0xFF91F1FF), CircleShape),
+        contentScale = ContentScale.Crop
       )
     }
-  }
+
+    Spacer(modifier = Modifier.height(16.dp))
 
 
 
-
-  // Search bar with TextField
+    // Search bar with TextField
 
     OutlinedTextField(
       value = "",

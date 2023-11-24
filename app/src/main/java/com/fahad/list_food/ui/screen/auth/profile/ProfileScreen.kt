@@ -145,8 +145,12 @@ fun ProfileScreen(
             Button(
               onClick = {
                 userDataViewModel.logout()
-                navController.popBackStack(Graph.AUTHENTICATION, inclusive = true)
-                navController.navigate(AuthScreen.LOGIN.route)
+                navController.navigate(AuthScreen.LOGIN.route) {
+                  // Use NavOptions to specify popUpTo destination
+                  popUpTo(route = Graph.AUTHENTICATION) {
+                    inclusive = true
+                  }
+                }
               },
                 modifier = Modifier
                     .padding(top = 8.dp)

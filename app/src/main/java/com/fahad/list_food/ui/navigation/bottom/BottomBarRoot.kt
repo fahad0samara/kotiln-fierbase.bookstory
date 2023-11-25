@@ -24,17 +24,18 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.fahad.list_food.model.FavoriteViewModel
-import com.fahad.list_food.model.FoodViewModel
+import com.fahad.list_food.ui.screen.favorite.FavoriteViewModel
+
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import com.fahad.list_food.ui.screen.cart.CartViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BottomBarRoot(navController: NavHostController = rememberNavController()
 
 ) {
-  val viewModel: FoodViewModel = hiltViewModel()
+  val viewModel: CartViewModel = hiltViewModel()
   val favoriteViewModel: FavoriteViewModel = hiltViewModel()
 
 
@@ -60,7 +61,7 @@ fun BottomBarRoot(navController: NavHostController = rememberNavController()
 @Composable
 fun BottomBarItem(
   navController: NavHostController,
-  viewModel: FoodViewModel,
+  viewModel: CartViewModel,
   favoriteViewModel: FavoriteViewModel
 ) {
   val screens = listOf(

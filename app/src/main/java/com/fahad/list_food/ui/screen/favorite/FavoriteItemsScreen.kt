@@ -39,12 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fahad.list_food.data.local.entities.FavoriteItem
-import com.fahad.list_food.model.FavoriteViewModel
 import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun FavoriteItemsScreen(
-    viewModel: FavoriteViewModel, navController: NavController
+  viewModel: FavoriteViewModel, navController: NavController
 ) {
     val favoriteItems by viewModel.favorite.collectAsState(emptyList())
 

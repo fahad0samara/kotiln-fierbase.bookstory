@@ -69,68 +69,7 @@ import com.fahad.list_food.ui.navigation.bottom.SearchNavGraph
 import com.fahad.list_food.ui.theme.dimens
 import java.time.LocalTime
 
-//@Composable
-//fun ItemList(viewModel: FoodViewModel, navController: NavController) {
-//    val items = listOf("عنصر 1", "عنصر 2", "عنصر 3", "عنصر 4")
-//    val cart = remember { mutableStateListOf<String>() }
-//    val availableItems = viewModel.availableItems
-//
-//
-//    Column {
-//        LazyColumn {
-//            items(availableItems) { item ->
-//                Column(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(8.dp)
-//                ) {
-//                    Text(text = item.name, fontSize = 20.sp)
-//                    Spacer(modifier = Modifier.weight(1f))
-//                    Text(text = "$${item.price}", fontSize = 20.sp)
-//                    Image(
-//                        painter = painterResource(id = item.imageResId),
-//                        contentDescription = null,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .height(200.dp)
-//                            .padding(top = 8.dp)
-//                    )
-//                    IconButton(
-//                        onClick = { viewModel.addToCart(item) }
-//                    ) {
-//                        Icon(imageVector = Icons.Default.Add, contentDescription = null)
-//                    }
-//
-//                    Button(
-//                        onClick = {
-//                            // Navigate to a screen to show more details
-//                            navController.navigate("itemDetails/${item.name}")
-//                        },
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(top = 8.dp)
-//                    ) {
-//                        Text(text = "See More Details")
-//                    }
-//                }
-//            }
-//        }
-//
-////
-////        LazyColumn {
-////            items(cartView) { item ->
-////                Text(text = item, fontSize = 20.sp, modifier = Modifier.padding(8.dp))
-////                //delete item from cart
-////                IconButton(
-////                    onClick = { viewModel.deleteItem(item) }
-////                ) {
-////                    Icon(imageVector = Icons.Default.Delete, contentDescription = null)
-////                }
-////            }
-////
-////        }
-//
-//    }}
+
 
 
 @Composable

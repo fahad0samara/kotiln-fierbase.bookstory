@@ -1,4 +1,4 @@
-package com.fahad.list_food.model
+package com.fahad.list_food.ui.screen.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class FoodViewModel @Inject constructor(private val itemRepository: ItemRepository):ViewModel() {
+class CartViewModel @Inject constructor(private val itemRepository: ItemRepository):ViewModel() {
     val cart: Flow<List<Item>> = itemRepository.getAllItems()
 
 

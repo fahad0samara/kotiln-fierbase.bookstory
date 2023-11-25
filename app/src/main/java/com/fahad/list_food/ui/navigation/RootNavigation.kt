@@ -18,8 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,8 +25,6 @@ import androidx.navigation.compose.composable
 import com.fahad.auth_fierbase_bottomnavigation.ui.screen.navigation.auth.AuthNavigation
 import com.fahad.auth_fierbase_bottomnavigation.ui.screen.navigation.auth.AuthScreen
 import com.fahad.list_food.ui.navigation.bottom.BottomBarRoot
-import com.fahad.list_food.model.FavoriteViewModel
-import com.fahad.list_food.model.FoodViewModel
 import com.fahad.list_food.ui.screen.UserDataViewModel
 import com.fahad.list_food.ui.screen.auth.login.LoginViewModel
 import com.fahad.list_food.ui.screen.auth.register.RegisterViewModel

@@ -1,4 +1,4 @@
-package com.fahad.list_food.model
+package com.fahad.list_food.ui.screen.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

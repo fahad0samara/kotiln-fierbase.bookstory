@@ -13,8 +13,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.fahad.list_food.model.FavoriteViewModel
-import com.fahad.list_food.model.FoodViewModel
+import com.fahad.list_food.ui.screen.favorite.FavoriteViewModel
+
 
 import com.fahad.list_food.ui.navigation.Graph
 import com.fahad.list_food.ui.screen.Home
@@ -25,13 +25,14 @@ import com.fahad.list_food.ui.screen.UserDataViewModel
 import com.fahad.list_food.ui.screen.auth.profile.EditProfileScreen
 import com.fahad.list_food.ui.screen.auth.profile.ProfileScreen
 import com.fahad.list_food.ui.screen.cart.CartScreen
+import com.fahad.list_food.ui.screen.cart.CartViewModel
 import com.fahad.list_food.ui.screen.favorite.FavoriteItemsScreen
 
 @Composable
 fun BottomBarNavigation(navController: NavHostController,
 ) {
   val userDataViewModel: UserDataViewModel = hiltViewModel()
-  val viewModel: FoodViewModel = hiltViewModel()
+  val viewModel: CartViewModel = hiltViewModel()
   val favoriteViewModel: FavoriteViewModel = hiltViewModel()
   LaunchedEffect(userDataViewModel.user) {
     userDataViewModel.getUserData() // Trigger fetching user data if not already done

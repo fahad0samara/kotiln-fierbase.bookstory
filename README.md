@@ -6,11 +6,15 @@
 Welcome to the Kotlin Firebase Bookstore, an Android application built with the MVVM architecture. This project is a delightful book discovery experience, allowing users to explore and favorite books seamlessly.
 
 <p align="center">
-  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/6dbf7afe-4b26-46e6-b5f7-4cf7edf8a736" width="200" alt="Screenshot 1">
-  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/58435e84-0a28-46ab-a67a-4c92cf6983dc" width="200" alt="Screenshot 2">
-  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/75e0bdbd-a5d7-44ae-9315-36712cf5ec68" width="200" alt="Screenshot 3">
-  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/d82b2901-3b18-4d8f-b22e-ac1603bfa68f" width="200" alt="Screenshot 4">
-  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/5e7b239b-df35-44e5-a053-97486eff02ee" width="200" alt="Screenshot 5">
+    <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/5d79a76b-a90f-421b-baec-3c61dfb6ab05" alt="Screenshot 7" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/de325108-6a43-45f5-bdd4-6108ad6d562a" alt="Screenshot 8" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/7c6b2a9b-2f1a-4ca5-80cf-cca8e1c31ff7" alt="Screenshot 9" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/6dbf7afe-4b26-46e6-b5f7-4cf7edf8a736" alt="Screenshot 1" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/58435e84-0a28-46ab-a67a-4c92cf6983dc" alt="Screenshot 2" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/75e0bdbd-a5d7-44ae-9315-36712cf5ec68" alt="Screenshot 3" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/d82b2901-3b18-4d8f-b22e-ac1603bfa68f" alt="Screenshot 4" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/5e7b239b-df35-44e5-a053-97486eff02ee" alt="Screenshot 5" width="200"/>
+  <img src="https://github.com/fahad0samara/kotiln-fierbase.bookstory/assets/90055525/3cf5d10c-d998-4463-8d37-d68647c0d5a2" alt="Screenshot 6" width="200"/>
 </p>
 
 

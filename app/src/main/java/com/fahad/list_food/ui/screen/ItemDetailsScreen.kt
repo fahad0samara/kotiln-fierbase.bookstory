@@ -44,14 +44,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.entities.FavoriteItem
+import com.fahad.list_food.ui.screen.cart.CartViewModel
 import com.fahad.list_food.ui.screen.favorite.FavoriteViewModel
-import com.fahad.list_food.model.FoodViewModel
+
 
 
 @Composable
 fun ItemDetailsScreen(
   item: BookItem,
-  viewModel: FoodViewModel,
+  viewModel: CartViewModel,
   favoriteViewModel: FavoriteViewModel, // Inject the FavoriteViewModel
   navController: NavController
 ) {

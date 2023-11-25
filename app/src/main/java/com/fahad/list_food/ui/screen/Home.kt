@@ -64,8 +64,9 @@ import coil.transform.CircleCropTransformation
 import com.fahad.list_food.R
 import com.fahad.list_food.data.local.BookItem
 import com.fahad.list_food.data.local.BookType
-import com.fahad.list_food.model.FoodViewModel
+
 import com.fahad.list_food.ui.navigation.bottom.SearchNavGraph
+import com.fahad.list_food.ui.screen.cart.CartViewModel
 import com.fahad.list_food.ui.theme.dimens
 import java.time.LocalTime
 
@@ -74,9 +75,9 @@ import java.time.LocalTime
 
 @Composable
 fun Home(
-  viewModel: FoodViewModel,
+  viewModel: CartViewModel,
   navController: NavController,
-    userDataViewModel: UserDataViewModel
+  userDataViewModel: UserDataViewModel
 ) {
   val selectedCategory = remember { mutableStateOf(BookType.Fiction) }
   val itemsForCategory = viewModel.groupedItems[selectedCategory.value] ?: emptyList()

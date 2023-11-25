@@ -51,12 +51,12 @@ import androidx.compose.ui.unit.sp
 import com.fahad.list_food.R
 
 import com.fahad.list_food.data.local.entities.Item
-import com.fahad.list_food.model.FoodViewModel
+
 import com.fahad.list_food.ui.theme.dimens
 
 @Composable
 fun CartScreen(
-  viewModel: FoodViewModel
+  viewModel: CartViewModel
 ) {
   val cartItems by viewModel.cart.collectAsState(emptyList())
 
@@ -242,7 +242,7 @@ fun CartScreen(
 
 @Composable
 fun CartItemRow(
-  item: Item, viewModel: FoodViewModel, onPriceChange: (Double) -> Unit
+  item: Item, viewModel: CartViewModel, onPriceChange: (Double) -> Unit
 ) {
   var quantity by remember { mutableIntStateOf(item.quantity) }
   var priceChange by remember { mutableDoubleStateOf(0.0) }

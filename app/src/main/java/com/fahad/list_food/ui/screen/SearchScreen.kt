@@ -48,12 +48,12 @@ import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavController
 import com.fahad.list_food.R
-import com.fahad.list_food.model.FoodViewModel
+import com.fahad.list_food.ui.screen.cart.CartViewModel
 
 @Composable
 fun SearchScreen(
-    viewModel: FoodViewModel,
-    navController: NavController
+  viewModel: CartViewModel,
+  navController: NavController
 ) {
     var searchText by remember { mutableStateOf("") }
     val filteredBooks = viewModel.groupedItems.values.flatten().filter { book ->

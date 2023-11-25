@@ -101,7 +101,7 @@ fun SplashScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
         ) {
         Text(
-            text = "Auth Firebase",
+            text = "bookstore",
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
